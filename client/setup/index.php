@@ -18,16 +18,21 @@
 
 <link href="../styles/main_css.css" rel="stylesheet" type="text/css" media="screen" />
 
+
+<!-- BOOSTRAP LINKS BEGGINING -->
+
 <!-- JQuery JS -->
 <script type="text/javascript" src="../js/jquery-1.7.2.min.js"></script>
 
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
-<!-- Optional theme -->
+<!-- Theme -->
 <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
 
 <!-- Latest compiled and minified JavaScript -->
 <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+
+<!-- BOOSTRAP LINKS END -->
 
 
 </head>
@@ -44,7 +49,7 @@
     <td width="720" valign="top" bgcolor="#FFFFFF"><blockquote><br />
       <h1><?php echo $InstallationWelcome;?></h1>
         <p><?php echo $InstallGuide;?></p>
-        <p><a href="edit_mainconfig.php?lang=en" class="button"><?php echo $BeginInstallation;?></a></p>
+        <p><a href="edit_mainconfig.php?lang=en" class="btn btn-success"><?php echo $BeginInstallation;?></a></p>
     
 		<?php
 		$lang_code="es";
@@ -56,7 +61,7 @@
 		
 		    <h1><?php echo $InstallationWelcome;?></h1>
         <p><?php echo $InstallGuide;?></p>
-        <p><a href="edit_mainconfig.php?lang=es" class="button"><?php echo $BeginInstallation;?></a></p>
+        <p><a href="edit_mainconfig.php?lang=es" class="btn btn-success"><?php echo $BeginInstallation;?></a></p>
         <p>&nbsp;</p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
