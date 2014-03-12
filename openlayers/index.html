@@ -1,0 +1,91 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>OpenLayers Simplest Example</title>
+</head>
+<body>
+<div id="Map" style="height:500px"></div>
+<script src="OpenLayers.js"></script>
+<script>
+    var lat            = 47.35387;
+    var lon            = 8.43609;
+    var zoom           = 18;
+ 
+    var fromProjection = new OpenLayers.Projection("EPSG:4326");   // Transform from WGS 1984
+    var toProjection   = new OpenLayers.Projection("EPSG:900913"); // to Spherical Mercator Projection
+    var position       = new OpenLayers.LonLat(lon, lat).transform( fromProjection, toProjection);
+ 
+    map = new OpenLayers.Map("Map");
+    var mapnik         = new OpenLayers.Layer.OSM();
+    map.addLayer(mapnik);
+ 
+    var markers = new OpenLayers.Layer.Markers( "Markers" );
+    map.addLayer(markers);
+   // markers.addMarker(new OpenLayers.Marker(position));
+ 
+  //  map.setCenter(position, zoom);
+
+       map.setCenter(new OpenLayers.LonLat(-9075004.4955698, 5028040.5259088), 5);
+    var position2;
+
+
+    vector = new OpenLayers.Layer.Vector('multiPolygon');
+    map.addLayer(vector);
+
+    polyList = [];
+
+    var polygonList;
+
+     map.events.register("click", map, function(e) {
+
+        var position2 = map.getLonLatFromPixel(e.xy);
+
+        polyList.push(position2);
+
+    	markers.addMarker(new OpenLayers.Marker(position2));
+
+        map.removeLayer(vector);
+
+        source = [
+    [{x: -9075004, y: 5028040}, {x:-9079132, y: 5025403}],
+    [{x: -9074004, y: 5026040}, {x:-9073132, y: 5027403}, {x: -9074673, y: 5026568}],
+    [{x: -9073004, y: 5027040}, {x:-9072132, y: 5029403}, {x: -9075673, y: 5028568}]
+];
+
+		polygonList = [];
+
+
+
+//		for (var i=0; i<source.length; i+=1) {
+		    var pointList = [];
+		    for (var j=0; j<polyList.length; j+=1) {
+		        var point = new OpenLayers.Geometry.Point(polyList[j].lon, polyList[j].lat);
+		        pointList.push(point);
+		    }
+		    var linearRing = new OpenLayers.Geometry.LinearRing(pointList);
+		    var polygon = new OpenLayers.Geometry.Polygon([linearRing]);
+		    polygonList.push(polygon);
+//		}
+
+		multuPolygonGeometry = new OpenLayers.Geometry.MultiPolygon(polygonList);
+		multiPolygonFeature = new OpenLayers.Feature.Vector(multuPolygonGeometry);
+		vector.removeAllFeatures();
+		vector.addFeatures(multiPolygonFeature);
+		map.addLayer(vector);
+
+
+		document.getElementById('area').innerHTML = polygonList[0].getArea()/1000000;
+
+
+    });
+
+
+
+
+</script>
+
+<p>Click on the map to define a corner of a polygon.</p>
+
+<h2>Area = <span id="area">0</span> km<sup>2</sup></h2>
+</body>
+</html>
